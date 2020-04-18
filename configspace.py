@@ -1,0 +1,6 @@
+
+
+class configspace:
+  pass
+
+
