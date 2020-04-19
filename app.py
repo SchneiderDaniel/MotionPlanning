@@ -31,10 +31,10 @@ def demo():
     controller = Controller(workspace,configspace)
     
 
-    workspace.drawRobot(0,0)
+    workspace.drawAll(workspace.currentPos[0],workspace.currentPos[1])
     def callback(event):
         print ("clicked at", event.x, event.y)
-        workspace.drawRobot(event.x-round(0.5*workspace.robotImage.width),event.y-round(0.5*workspace.robotImage.width))
+        controller.draw(event.x, event.y)
         print(workspace.currentPos)
     
     workspace.label.bind("<Button-1>", callback)
