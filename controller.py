@@ -9,14 +9,14 @@ class Controller:
 
     def setCurrentPosAsInit(self):
         self.configspace.initConfig=(self.workspace.currentPos[0],self.workspace.currentPos[1])
-        # print('Initial Config set to: '+ str(self.configspace.initConfig))
+        self.configspace.drawSpace()
 
     def setCurrentPosAsGoal(self):
         self.configspace.goalConfig=(self.workspace.currentPos[0],self.workspace.currentPos[1])
         self.configspace.setIntialSolutionPath()
         self.configspace.isInitialize = True
         self.workspace.isInitialize = True
-        # print('Goal Config set to: '+ str(self.configspace.goalConfig))
+        self.configspace.drawSpace()
 
     def drawMouseOffSet(self,mouseX,mouseY):
         self.workspace.drawAll(mouseX-round(0.5*self.workspace.robotImage.width),mouseY-round(0.5*self.workspace.robotImage.width),

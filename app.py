@@ -43,6 +43,7 @@ def demo():
             else: setBackgroundColor(page1,"green")
 
     slider = Scale(page1, from_=0, to=200, orient=HORIZONTAL, command=moveRobotOnPath)
+    slider.config(length=600)
     
     def set_goal():
         controller.setCurrentPosAsGoal()

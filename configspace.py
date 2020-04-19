@@ -1,6 +1,10 @@
 from tkinter import ttk, Canvas, BOTH, CENTER, RAISED
 
 class Configspace:
+
+    def off(self,x):
+      return x+self.theOffset
+
     def __init__(self,root):
         self.initConfig = -1, -1
         self.goalConfig = -1, -1
@@ -10,38 +14,50 @@ class Configspace:
         self.xExt = 0
         self.yExt = 0
         self.canvas = Canvas(self.root)
-        self.theOffset = 20
-        
-        # canvas_width = 80
-        # canvas_height = 40
-        # w = Canvas(root, width=canvas_width,height=canvas_height)
-
-
-    def setDimensions(self,x,y):
-      print ('Set dimensions to: ' + str(x) + '/'+ str(y))
+        self.theOffset = 24
       
+
+
+    def setDimensions(self,x,y):      
       self.xExt=x
       self.yExt=y
       off = self.theOffset
-      self.canvas.config(bd=0, height=y+2*off, width=x+2*off, offset='10,10')
-      
-      self.canvas.create_line(off, 0+off, 0+off, y+off)
-      self.canvas.create_line(off, 0+off, x+off, 0+off)
-      self.canvas.create_line(x+off, y+off, x+off, 0+off)
-      self.canvas.create_line(x+off, y+off, 0+off, y+off)
-
+      self.canvas.config(bd=0, height=y+2*self.theOffset, width=x+2*self.theOffset)  
+      self.drawSpace()   
       self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
-      #       # self.canvas.pack(fill=BOTH, expand=1)
+      # self.canvas.pack(fill=BOTH, expand=1)
+
+
+
+    def drawSpace(self):
+         #Open: remove offset, canvas.config offset buggy
+      
+      self.canvas.delete("all")
+      y = self.yExt
+      x = self.xExt
+      self.canvas.create_line(self.off(0), self.off(0), self.off(0), self.off(y))
+      self.canvas.create_line(self.off(0), self.off(0), self.off(x), self.off(0))
+      self.canvas.create_line(self.off(x), self.off(y), self.off(x), self.off(0))
+      self.canvas.create_line(self.off(x), self.off(y), self.off(0), self.off(y))
+
+      if len(self.solutionPath)>0: self.drawSolutionPath()
+      if self.initConfig[0]>-1: self.drawConfiguration(self.initConfig[0],self.initConfig[1],'green')
+      if self.goalConfig[0]>-1: self.drawConfiguration(self.goalConfig[0],self.goalConfig[1],'red')
+
+    def drawConfiguration(self,x,y,color):
+      r =5
+      self.canvas.create_oval(self.off(x-r),self.off(y-r),self.off(x+r),self.off(y+r),fill=color)
+
+    def drawSolutionPath(self):
+      for i in range(1,len(self.solutionPath)):
+        c1 = self.solutionPath[i-1]
+        c2 = self.solutionPath[i]
+        self.canvas.create_line(self.off(c1[0]),self.off(c1[1]),self.off(c2[0]),self.off(c2[1]),fill='purple1')
 
 
     def setIntialSolutionPath(self):
         resolution = max(abs(
             self.initConfig[0]-self.goalConfig[0]), abs(self.goalConfig[1]-self.goalConfig[1]))
-        print(' Initial config: ' +
-              str(self.initConfig[0]) + '/' + str(self.initConfig[1]))
-        print(' Goal config: ' +
-              str(self.goalConfig[0]) + '/' + str(self.goalConfig[1]))
-        print('resolution: ' + str(resolution))
 
         self.solutionPath.append(self.initConfig)
         for i in range(1,resolution):
@@ -52,6 +68,4 @@ class Configspace:
             self.solutionPath.append((newX, newY))
         self.solutionPath.append(self.goalConfig)
 
-        # for s in self.solutionPath:
-        #     print(s)
 
