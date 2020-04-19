@@ -1,5 +1,5 @@
 import tkinter 
-from tkinter import ttk, RIGHT, Canvas,BOTH
+from tkinter import ttk, RIGHT, Canvas, BOTH, Scale, HORIZONTAL
 from workspace import Workspace 
 from configspace import Configspace
 from controller import  Controller
@@ -28,25 +28,35 @@ def demo():
 
     workspace.drawAll(workspace.currentPos[0],workspace.currentPos[1])
     def callback(event):
-        print ("clicked at", event.x, event.y)
-        controller.draw(event.x, event.y)
-      
+        # print ("clicked at", event.x, event.y)
+        controller.drawMouseOffSet(event.x, event.y)
         if controller.isInCollision(): setBackgroundColor(page1,"red")
         else: setBackgroundColor(page1,"green")
 
-        print(workspace.currentPos)
-    
     workspace.label.bind("<Button-1>", callback)
+
+    def moveRobotOnPath(val):
+        if controller.isAllInitialized():
+            controller.setSolutionPathOnCurrentPos(int(val))
+            controller.drawCurrentPos()
+
+    slider = Scale(page1, from_=0, to=200, orient=HORIZONTAL, command=moveRobotOnPath)
+    
+    def set_goal():
+        controller.setCurrentPosAsGoal()
+        #Update Slider
+        slider['from_'] = 0
+        slider['to_'] = len(configspace.solutionPath)-1
+
+    setGoalButton = ttk.Button(page1, text = 'Set Goal',command = set_goal)
+    setGoalButton.pack(side=tkinter.RIGHT)
 
     def set_init():
         controller.setCurrentPosAsInit()
     setInitButton = ttk.Button(page1, text = 'Set Init',command = set_init)
     setInitButton.pack(side=tkinter.RIGHT)
 
-    def set_goal():
-        controller.setCurrentPosAsGoal()
-    setGoalButton = ttk.Button(page1, text = 'Set Goal',command = set_goal)
-    setGoalButton.pack(side=tkinter.RIGHT)
+    slider.pack()
 
     root.mainloop()
 

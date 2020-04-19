@@ -7,14 +7,22 @@ class Controller:
 
     def setCurrentPosAsInit(self):
         self.configspace.initConfig=(self.workspace.currentPos[0],self.workspace.currentPos[1])
-        print('Initial Config set to: '+ str(self.configspace.initConfig))
+        # print('Initial Config set to: '+ str(self.configspace.initConfig))
 
     def setCurrentPosAsGoal(self):
         self.configspace.goalConfig=(self.workspace.currentPos[0],self.workspace.currentPos[1])
-        print('Goal Config set to: '+ str(self.configspace.goalConfig))
+        self.configspace.setIntialSolutionPath()
+        self.configspace.isInitialize = True
+        self.workspace.isInitialize = True
+        # print('Goal Config set to: '+ str(self.configspace.goalConfig))
 
-    def draw(self,x,y):
-        self.workspace.drawAll(x-round(0.5*self.workspace.robotImage.width),y-round(0.5*self.workspace.robotImage.width),
+    def drawMouseOffSet(self,mouseX,mouseY):
+        self.workspace.drawAll(mouseX-round(0.5*self.workspace.robotImage.width),mouseY-round(0.5*self.workspace.robotImage.width),
+        self.configspace.initConfig[0],self.configspace.initConfig[1], 
+        self.configspace.goalConfig[0],self.configspace.goalConfig[1])
+
+    def drawCurrentPos(self):
+        self.workspace.drawAll(self.workspace.currentPos[0],self.workspace.currentPos[1],
         self.configspace.initConfig[0],self.configspace.initConfig[1], 
         self.configspace.goalConfig[0],self.configspace.goalConfig[1])
 
@@ -22,3 +30,10 @@ class Controller:
         if x is None: x= self.workspace.currentPos[0]
         if y is None: y= self.workspace.currentPos[1]
         return self.workspace.isInCollision(x,y)
+
+    def isAllInitialized(self):
+        if self.configspace.isInitialize and self.workspace.isInitialize: return True
+        return False
+    
+    def setSolutionPathOnCurrentPos(self, index):
+        self.workspace.currentPos = self.configspace.solutionPath[index]

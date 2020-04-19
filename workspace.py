@@ -23,6 +23,7 @@ class Workspace:
         self.label = ttk.Label(root, image = self.envPhoto)
 
         self.currentPos = (0,0)
+        self.isInitialize = False
 
     def drawAll (self,xCurrent,yCurrent,xInit=-1,yInit=-1,xGoal=-1,yGoal=-1):
         self.currentPos=xCurrent,yCurrent
