@@ -25,6 +25,6 @@ class Configspace:
             self.solutionPath.append((newX, newY))
         self.solutionPath.append(self.goalConfig)
 
-        for s in self.solutionPath:
-            print(s)
+        # for s in self.solutionPath:
+        #     print(s)
 

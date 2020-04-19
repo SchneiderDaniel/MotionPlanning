@@ -39,12 +39,13 @@ def demo():
         if controller.isAllInitialized():
             controller.setSolutionPathOnCurrentPos(int(val))
             controller.drawCurrentPos()
+            if controller.isInCollision(): setBackgroundColor(page1,"red")
+            else: setBackgroundColor(page1,"green")
 
     slider = Scale(page1, from_=0, to=200, orient=HORIZONTAL, command=moveRobotOnPath)
     
     def set_goal():
         controller.setCurrentPosAsGoal()
-        #Update Slider
         slider['from_'] = 0
         slider['to_'] = len(configspace.solutionPath)-1
 
