@@ -43,6 +43,7 @@ class Workspace:
         self.label.pack(side = "bottom", fill = "both", expand = "yes")
 
     
-
+    def isInCollision(self,x,y):
+        return True
     
     

@@ -1,10 +1,11 @@
 import tkinter 
-from tkinter import ttk, RIGHT
+from tkinter import ttk, RIGHT, Canvas,BOTH
 from workspace import Workspace 
 from configspace import Configspace
 from controller import  Controller
 from PIL import ImageTk, Image
 import os
+from utils import setBackgroundColor
 
 
 def demo():
@@ -13,17 +14,17 @@ def demo():
     universal_height = 1000
 
     nb = ttk.Notebook(root)
-    
-
-    # adding Frames as pages for the ttk.Notebook
-    # first page, which would get widgets gridded into it
     page1 = ttk.Frame(nb, width= 1080,height = universal_height)
-    # second page
     page2 = ttk.Frame(nb,width = 1080,height = universal_height)
 
     nb.add(page1, text='Workspace')
     nb.add(page2, text='Configspace')
-    nb.grid(column=2)
+    nb.grid(column=0)
+
+    # collisionCanvas= Canvas(page1, height = 50)
+    # collisionCanvas. create_rectangle(0, 0, 50, 50,
+    #         outline="#f50", fill="#f50")
+    # collisionCanvas.pack(side=tkinter.RIGHT)
 
    
     workspace = Workspace("./resources/robot_BW_small.bmp", "./resources/Room_BW_small.bmp", page1)
@@ -35,6 +36,13 @@ def demo():
     def callback(event):
         print ("clicked at", event.x, event.y)
         controller.draw(event.x, event.y)
+      
+        if controller.isInCollision(): setBackgroundColor(page1,"red")
+        else: setBackgroundColor(page1,"green")
+        # style = ttk.Style()     # Create style
+        # style.configure("Blue.TFrame", background="blue") # Set bg color
+        # page1.config(style='Blue.TFrame')    # Apply style to widget
+
         print(workspace.currentPos)
     
     workspace.label.bind("<Button-1>", callback)

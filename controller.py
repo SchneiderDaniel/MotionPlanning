@@ -17,3 +17,8 @@ class Controller:
         self.workspace.drawAll(x-round(0.5*self.workspace.robotImage.width),y-round(0.5*self.workspace.robotImage.width),
         self.configspace.initConfig[0],self.configspace.initConfig[1], 
         self.configspace.goalConfig[0],self.configspace.goalConfig[1])
+
+    def isInCollision(self, x=None,y=None):
+        if x is None: x= self.workspace.currentPos[0]
+        if y is None: y= self.workspace.currentPos[1]
+        return self.workspace.isInCollision(x,y)
