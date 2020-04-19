@@ -28,10 +28,9 @@ class Workspace:
     def drawAll (self,xCurrent,yCurrent,xInit=-1,yInit=-1,xGoal=-1,yGoal=-1):
         self.currentPos=xCurrent,yCurrent
         self.imageToDraw = self.envImage.copy()
-        self.imageToDraw.paste(self.robotImage.copy(),(self.currentPos[0],self.currentPos[1]))
         if xInit>-1: self.imageToDraw.paste(self.robotImage.copy(),(xInit,yInit))
         if xGoal>-1: self.imageToDraw.paste(self.robotImage.copy(),(xGoal,yGoal))
-
+        self.imageToDraw.paste(self.robotImage.copy(),(self.currentPos[0],self.currentPos[1]))
 
 
         self.photoToDraw = ImageTk.PhotoImage(self.imageToDraw)
