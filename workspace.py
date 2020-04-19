@@ -4,6 +4,7 @@ from io import BytesIO
 from tkinter import ttk, Canvas, NW
 import os
 from configspace import Configspace
+from utils import  isPixelWhite
 
 
 class Workspace:
@@ -15,9 +16,6 @@ class Workspace:
         self.envPhoto = ImageTk.PhotoImage(self.envImage)
 
         self.robotImage = Image.open(robotImagePath)
-
-        #https://stackoverflow.com/questions/765736/using-pil-to-make-all-white-pixels-transparent
-        # white_to_transparency(self.robotImage)
 
         self.robotArray = np.array(self.robotImage)
         self.robotPhoto = ImageTk.PhotoImage(self.robotImage)
@@ -44,6 +42,15 @@ class Workspace:
 
     
     def isInCollision(self,x,y):
-        return True
-    
+        rows = self.robotArray.shape[1]
+        cols = self.robotArray.shape[0]
+        for y1 in range(0, cols):
+            for x1 in range(0, rows):
+                if not isPixelWhite(self.robotArray[x1,y1]):  
+                    if not isPixelWhite(self.envArray[y1+y,x1+x]):
+                        return True
+        return False
+
+
+        
     
