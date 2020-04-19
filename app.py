@@ -1,6 +1,8 @@
 import tkinter 
 from tkinter import ttk, RIGHT
 from workspace import Workspace 
+from configspace import Configspace
+from controller import  Controller
 from PIL import ImageTk, Image
 import os
 
@@ -23,22 +25,27 @@ def demo():
     nb.add(page2, text='Configspace')
     nb.grid(column=2)
 
-    workspace = Workspace("./resources/robot_BW_small.bmp", "./resources/Room_BW_small.bmp", page1 )
+   
+    workspace = Workspace("./resources/robot_BW_small.bmp", "./resources/Room_BW_small.bmp", page1)
+    configspace = Configspace()
+    controller = Controller(workspace,configspace)
+    
+
     workspace.drawRobot(0,0)
     def callback(event):
         print ("clicked at", event.x, event.y)
-        workspace.drawRobot(event.x,event.y)
+        workspace.drawRobot(event.x-round(0.5*workspace.robotImage.width),event.y-round(0.5*workspace.robotImage.width))
         print(workspace.currentPos)
     
     workspace.label.bind("<Button-1>", callback)
 
     def set_init():
-        workspace.setCurrentPosAsInit
+        controller.setCurrentPosAsInit()
     setInitButton = ttk.Button(page1, text = 'Set Init',command = set_init)
     setInitButton.pack(side=tkinter.RIGHT)
 
     def set_goal():
-        workspace.setCurrentPosAsGoal
+        controller.setCurrentPosAsGoal()
     setGoalButton = ttk.Button(page1, text = 'Set Goal',command = set_goal)
     setGoalButton.pack(side=tkinter.RIGHT)
 
