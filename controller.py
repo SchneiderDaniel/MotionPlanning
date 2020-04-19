@@ -4,6 +4,8 @@ class Controller:
     def __init__(self, workspace, configspace):
         self.workspace = workspace
         self.configspace= configspace
+        self.configspace.setDimensions(self.workspace.envArray.shape[1]-round(self.workspace.robotArray.shape[1]/2)
+        ,self.workspace.envArray.shape[0]-round(self.workspace.robotArray.shape[0]/2))
 
     def setCurrentPosAsInit(self):
         self.configspace.initConfig=(self.workspace.currentPos[0],self.workspace.currentPos[1])

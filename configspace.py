@@ -1,4 +1,4 @@
-
+from tkinter import ttk, Canvas, BOTH, CENTER, RAISED
 
 class Configspace:
     def __init__(self,root):
@@ -7,6 +7,31 @@ class Configspace:
         self.solutionPath = []
         self.isInitialize = False
         self.root = root
+        self.xExt = 0
+        self.yExt = 0
+        self.canvas = Canvas(self.root)
+        self.theOffset = 20
+        
+        # canvas_width = 80
+        # canvas_height = 40
+        # w = Canvas(root, width=canvas_width,height=canvas_height)
+
+
+    def setDimensions(self,x,y):
+      print ('Set dimensions to: ' + str(x) + '/'+ str(y))
+      
+      self.xExt=x
+      self.yExt=y
+      off = self.theOffset
+      self.canvas.config(bd=0, height=y+2*off, width=x+2*off, offset='10,10')
+      
+      self.canvas.create_line(off, 0+off, 0+off, y+off)
+      self.canvas.create_line(off, 0+off, x+off, 0+off)
+      self.canvas.create_line(x+off, y+off, x+off, 0+off)
+      self.canvas.create_line(x+off, y+off, 0+off, y+off)
+
+      self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
+      #       # self.canvas.pack(fill=BOTH, expand=1)
 
 
     def setIntialSolutionPath(self):
