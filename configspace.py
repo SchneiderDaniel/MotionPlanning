@@ -1,11 +1,13 @@
 
 
 class Configspace:
-    def __init__(self):
+    def __init__(self,root):
         self.initConfig = -1, -1
         self.goalConfig = -1, -1
         self.solutionPath = []
         self.isInitialize = False
+        self.root = root
+
 
     def setIntialSolutionPath(self):
         resolution = max(abs(

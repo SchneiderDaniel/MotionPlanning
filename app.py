@@ -22,7 +22,7 @@ def demo():
     nb.grid(column=0)
  
     workspace = Workspace("./resources/robot_BW_small.bmp", "./resources/Room_BW_small.bmp", page1)
-    configspace = Configspace()
+    configspace = Configspace(page2)
     controller = Controller(workspace,configspace)
 
 
