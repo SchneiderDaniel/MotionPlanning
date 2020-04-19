@@ -16,8 +16,6 @@ class Configspace:
         self.canvas = Canvas(self.root)
         self.theOffset = 24
       
-
-
     def setDimensions(self,x,y):      
       self.xExt=x
       self.yExt=y
@@ -27,11 +25,8 @@ class Configspace:
       self.canvas.place(relx=0.5, rely=0.5, anchor=CENTER)
       # self.canvas.pack(fill=BOTH, expand=1)
 
-
-
     def drawSpace(self):
          #Open: remove offset, canvas.config offset buggy
-      
       self.canvas.delete("all")
       y = self.yExt
       x = self.xExt

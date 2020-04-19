@@ -16,7 +16,6 @@ class Workspace:
         self.envPhoto = ImageTk.PhotoImage(self.envImage)
 
         self.robotImage = Image.open(robotImagePath)
-
         self.robotArray = np.array(self.robotImage)
         self.robotPhoto = ImageTk.PhotoImage(self.robotImage)
 
@@ -31,16 +30,11 @@ class Workspace:
         if xInit>-1: self.imageToDraw.paste(self.robotImage.copy(),(xInit,yInit))
         if xGoal>-1: self.imageToDraw.paste(self.robotImage.copy(),(xGoal,yGoal))
         self.imageToDraw.paste(self.robotImage.copy(),(self.currentPos[0],self.currentPos[1]))
-
-
         self.photoToDraw = ImageTk.PhotoImage(self.imageToDraw)
-
         self.label.configure(image=self.photoToDraw)
         self.label.image = self.photoToDraw
-
         self.label.pack(side = "bottom", fill = "both", expand = "yes")
-
-    
+   
     def isInCollision(self,x,y):
         rows = self.robotArray.shape[1]
         cols = self.robotArray.shape[0]
